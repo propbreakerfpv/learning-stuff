@@ -6,4 +6,9 @@ gcc -S -masm=intel
 * talk any ishes from over the week.
 * intro git enough to pull lessons repo.
 * intro `read()` / talk pointers.
+    include location for read
+    ```c
+    #include <unistd.h>
+    ```
 * start guess the number / leave it as homework.
+
