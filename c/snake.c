@@ -47,6 +47,7 @@ int main(){
 }
 void calculate_move() {
     board[head] = BODY;
+    int tail = get_tail(head);
     // printf("this input is \"%c\"", getch());
     char ch = getch();
     switch (ch) {
@@ -85,12 +86,14 @@ void calculate_move() {
             break;
     }
     if (board[head] == APPLE) {
-        int rnum = rand() % WIDTH * HIGHT;
+        int rnum;
+        do {
+            rnum = rand() % WIDTH * HIGHT;
+        } while (board[rnum] != EMPTY);
         board[rnum] = APPLE;
         length ++;
     } else {
         // we only do this if there isn't an apple so the snake grows
-        int tail = get_tail(head - 1);
         dbg = tail;
         board[tail] = EMPTY;
         snake[tail] = -1;
