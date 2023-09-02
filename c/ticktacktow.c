@@ -136,7 +136,7 @@ int decode_move(int *buf, char *peace) {
     return 1;
 }
 
-//  state(x or o)         played
+//  state(x or o)     played       unused
 // 111 1,11 11,1  11,1 111, 111, 0000, 0000, 0000
 
 void display(int board) {
@@ -190,5 +190,5 @@ char get_letter(int i) {
         case 2:
             return 'c';
     }
-    return '\0';
+    return -1;
 }
