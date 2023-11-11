@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include <ncurses.h>
+#include <locale.h>
+
 #define LEN 100
 
 
@@ -14,6 +17,8 @@ struct Square {
 void display(struct Square* board);
 
 int main() {
+    initscr();
+    setlocale(LC_CTYPE, "");
     struct Square *board = malloc(sizeof(struct Square) * LEN);
 
     srand(time(NULL));
@@ -26,16 +31,20 @@ int main() {
     display(board);
 
     free(board);
+    getch();
+    endwin();
     return 0;
 }
 
 void display(struct Square* board) {
     for (int i = 0; i < LEN; i ++) {
-        // printf("board[i]: %i, %i, %i\n", board[i].x, board[i].y, board[i].type);
+        move(board[i].y, board[i].x);
         if (board[i].type == 1)  {
-            printf("\033[%i;%iH█", board[i].x, board[i].y);
+            printw("#");
+            // printf("\033[%i;%iH█", board[i].x, board[i].y);
         } else if (board[i].type == 0) {
-            printf("\033[%i;%iH ", board[i].x, board[i].y);
+            printw(" ");
+            // printf("\033[%i;%iH ", board[i].x, board[i].y);
         } else {
             continue;
         }

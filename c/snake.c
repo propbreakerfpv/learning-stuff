@@ -1,8 +1,11 @@
+#include <sys/time.h>
+#include <time.h>
 #include <curses.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <errno.h>
 
 
 #define BODY '#'
@@ -26,7 +29,9 @@ int head;
 int dir;
 int snake[600];
 int length;
-char dbg = '.';
+int dbg = -1;
+
+struct timeval end, start;
 
 int main(){
     // init ncurses
@@ -49,25 +54,34 @@ void calculate_move() {
     board[head] = BODY;
     int tail = get_tail(head);
     // printf("this input is \"%c\"", getch());
+    gettimeofday(&start, 0);
     char ch = getch();
+    gettimeofday(&end, 0);
+    unsigned int time = (end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec;
+    dbg = time / 1000;
+    struct timespec t = {0, (time / 1000) * 1000000};
+    struct timespec rem = {0, 0};
+
+    int res;
+    do{
+        res = nanosleep(&t, &rem);
+    } while (res && errno == EINTR);
+
+    // sleep(2);
     switch (ch) {
         case 'w':
-            dbg = 'w';
             dir = 1;
             head -= WIDTH;
             break;
         case 'a':
-            dbg = 'a';
             dir = 0;
             head -= 1;
             break;
         case 's':
-            dbg = 's';
             dir = 3;
             head += WIDTH;
             break;
         case 'd':
-            dbg = 'd';
             dir = 2;
             head += 1;
             break;
@@ -94,7 +108,6 @@ void calculate_move() {
         length ++;
     } else {
         // we only do this if there isn't an apple so the snake grows
-        dbg = tail;
         board[tail] = EMPTY;
         snake[tail] = -1;
     }
@@ -104,7 +117,7 @@ void calculate_move() {
 
 void display() {
     clear();
-    printw("%i head %i", dbg, head);
+    printw("dbg: %i", dbg, head);
     int idx = 0;
     for (int i = 0; i < HIGHT; i ++) {
         for (int j = 0; j < WIDTH; j ++) {
