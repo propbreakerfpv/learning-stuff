@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define LEN 100
+#define LEN 1000
 
 
 struct Square {

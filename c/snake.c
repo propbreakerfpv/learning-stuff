@@ -27,6 +27,7 @@ int dir;
 int snake[600];
 int length;
 char dbg = '.';
+int score = 0;
 
 int main(){
     // init ncurses
@@ -49,24 +50,24 @@ void calculate_move() {
     board[head] = BODY;
     int tail = get_tail(head);
     // printf("this input is \"%c\"", getch());
-    char ch = getch();
+    int ch = getch();
     switch (ch) {
-        case 'w':
+        case 'w': case KEY_UP:
             dbg = 'w';
             dir = 1;
             head -= WIDTH;
             break;
-        case 'a':
+        case 'a': case KEY_LEFT:
             dbg = 'a';
             dir = 0;
             head -= 1;
             break;
-        case 's':
+        case 's': case KEY_DOWN:
             dbg = 's';
             dir = 3;
             head += WIDTH;
             break;
-        case 'd':
+        case 'd': case KEY_RIGHT:
             dbg = 'd';
             dir = 2;
             head += 1;
@@ -86,6 +87,7 @@ void calculate_move() {
             break;
     }
     if (board[head] == APPLE) {
+        score ++;
         int rnum;
         do {
             rnum = rand() % WIDTH * HIGHT;
@@ -104,15 +106,17 @@ void calculate_move() {
 
 void display() {
     clear();
-    printw("%i head %i", dbg, head);
+    printw("%i head %i\n", dbg, head);
     int idx = 0;
     for (int i = 0; i < HIGHT; i ++) {
+        printw("|");
         for (int j = 0; j < WIDTH; j ++) {
             printw("%c", board[idx]);
             idx ++;
         }
-        printw("\n");
+        printw("|\n");
     }
+    printw("score %i", score);
 }
 
 void init_board() {
