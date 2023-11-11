@@ -1,8 +1,11 @@
+#include <sys/time.h>
+#include <time.h>
 #include <curses.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <errno.h>
 
 
 #define BODY '#'
@@ -26,8 +29,14 @@ int head;
 int dir;
 int snake[600];
 int length;
+<<<<<<< HEAD
 char dbg = '.';
 int score = 0;
+=======
+int dbg = -1;
+
+struct timeval end, start;
+>>>>>>> c8d30df6bef789072f15903c222240cb1126ec5c
 
 int main(){
     // init ncurses
@@ -50,6 +59,7 @@ void calculate_move() {
     board[head] = BODY;
     int tail = get_tail(head);
     // printf("this input is \"%c\"", getch());
+<<<<<<< HEAD
     int ch = getch();
     switch (ch) {
         case 'w': case KEY_UP:
@@ -69,6 +79,36 @@ void calculate_move() {
             break;
         case 'd': case KEY_RIGHT:
             dbg = 'd';
+=======
+    gettimeofday(&start, 0);
+    char ch = getch();
+    gettimeofday(&end, 0);
+    unsigned int time = (end.tv_sec - start.tv_sec) * 1000000 + end.tv_usec - start.tv_usec;
+    dbg = time / 1000;
+    struct timespec t = {0, (time / 1000) * 1000000};
+    struct timespec rem = {0, 0};
+
+    int res;
+    do{
+        res = nanosleep(&t, &rem);
+    } while (res && errno == EINTR);
+
+    // sleep(2);
+    switch (ch) {
+        case 'w':
+            dir = 1;
+            head -= WIDTH;
+            break;
+        case 'a':
+            dir = 0;
+            head -= 1;
+            break;
+        case 's':
+            dir = 3;
+            head += WIDTH;
+            break;
+        case 'd':
+>>>>>>> c8d30df6bef789072f15903c222240cb1126ec5c
             dir = 2;
             head += 1;
             break;
@@ -96,7 +136,6 @@ void calculate_move() {
         length ++;
     } else {
         // we only do this if there isn't an apple so the snake grows
-        dbg = tail;
         board[tail] = EMPTY;
         snake[tail] = -1;
     }
@@ -106,7 +145,11 @@ void calculate_move() {
 
 void display() {
     clear();
+<<<<<<< HEAD
     printw("%i head %i\n", dbg, head);
+=======
+    printw("dbg: %i", dbg, head);
+>>>>>>> c8d30df6bef789072f15903c222240cb1126ec5c
     int idx = 0;
     for (int i = 0; i < HIGHT; i ++) {
         printw("|");
