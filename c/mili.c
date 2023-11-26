@@ -11,6 +11,6 @@ int main() {
         printf("");
     }
     gettimeofday(&stop, 0);
-    unsigned int mili = (stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec;
+    unsigned int mili = stop.tv_usec - start.tv_usec;
     printf("%u\n", mili);
 }

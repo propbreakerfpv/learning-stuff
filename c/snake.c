@@ -29,9 +29,14 @@ int head;
 int dir;
 int snake[600];
 int length;
+<<<<<<< HEAD
+char dbg = '.';
+int score = 0;
+=======
 int dbg = -1;
 
 struct timeval end, start;
+>>>>>>> c8d30df6bef789072f15903c222240cb1126ec5c
 
 int main(){
     // init ncurses
@@ -54,6 +59,27 @@ void calculate_move() {
     board[head] = BODY;
     int tail = get_tail(head);
     // printf("this input is \"%c\"", getch());
+<<<<<<< HEAD
+    int ch = getch();
+    switch (ch) {
+        case 'w': case KEY_UP:
+            dbg = 'w';
+            dir = 1;
+            head -= WIDTH;
+            break;
+        case 'a': case KEY_LEFT:
+            dbg = 'a';
+            dir = 0;
+            head -= 1;
+            break;
+        case 's': case KEY_DOWN:
+            dbg = 's';
+            dir = 3;
+            head += WIDTH;
+            break;
+        case 'd': case KEY_RIGHT:
+            dbg = 'd';
+=======
     gettimeofday(&start, 0);
     char ch = getch();
     gettimeofday(&end, 0);
@@ -82,6 +108,7 @@ void calculate_move() {
             head += WIDTH;
             break;
         case 'd':
+>>>>>>> c8d30df6bef789072f15903c222240cb1126ec5c
             dir = 2;
             head += 1;
             break;
@@ -100,6 +127,7 @@ void calculate_move() {
             break;
     }
     if (board[head] == APPLE) {
+        score ++;
         int rnum;
         do {
             rnum = rand() % WIDTH * HIGHT;
@@ -117,15 +145,21 @@ void calculate_move() {
 
 void display() {
     clear();
+<<<<<<< HEAD
+    printw("%i head %i\n", dbg, head);
+=======
     printw("dbg: %i", dbg, head);
+>>>>>>> c8d30df6bef789072f15903c222240cb1126ec5c
     int idx = 0;
     for (int i = 0; i < HIGHT; i ++) {
+        printw("|");
         for (int j = 0; j < WIDTH; j ++) {
             printw("%c", board[idx]);
             idx ++;
         }
-        printw("\n");
+        printw("|\n");
     }
+    printw("score %i", score);
 }
 
 void init_board() {

@@ -2,10 +2,14 @@
 #include <stdlib.h>
 #include <time.h>
 
+<<<<<<< HEAD
+#define LEN 1000
+=======
 #include <ncurses.h>
 #include <locale.h>
 
 #define LEN 100
+>>>>>>> c8d30df6bef789072f15903c222240cb1126ec5c
 
 
 struct Square {

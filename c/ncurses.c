@@ -1,4 +1,4 @@
-#include <curses.h>
+#include<curses.h>
 #include<stdio.h>
 #include<ncurses.h>
 
@@ -12,7 +12,9 @@ void checkArrow(){
     noecho();
 
     while (1) {
-        if (getch() == 'q') {
+        clear();
+        char ch = getch();
+        if (ch == KEY_UP) { // KEY_UP
             break;
         }
         printw("l");
