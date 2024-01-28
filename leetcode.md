@@ -11,3 +11,6 @@
     - [*smalest even multiple*](https://leetcode.com/problems/smallest-even-multiple/description/)
     - [*power of 3*](https://leetcode.com/problems/power-of-three/description/)
     - [convert the temparature](https://leetcode.com/problems/convert-the-temperature/description/) -- malloc
+
+## good
+    - [search-insert-position](https://leetcode.com/problems/search-insert-position/)
